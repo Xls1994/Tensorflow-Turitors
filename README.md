@@ -5,20 +5,20 @@ You have just find the code for Tensoflow r1.0 with Chinese annotations</br>
 [Tensorflow官网](https://www.tensorflow.org)
 ### Linux安装  
   详细的安装过程可以查看官网给出的示例，这里仅提供简单的pip安装方式
-  ```python
+  ```bash
  $ pip install tensorflow      # Python 2.7; CPU support (no GPU support)
  $ pip3 install tensorflow     # Python 3.n; CPU support (no GPU support)
  $ pip install tensorflow-gpu  # Python 2.7;  GPU support
  $ pip3 install tensorflow-gpu # Python 3.n; GPU support
  ```
  如果第一步失败，可以使用以下的命令安装最新版的tensorflow
- ```python
+ ```bash
  $ sudo pip  install --upgrade TF_PYTHON_URL   # Python 2.7
  $ sudo pip3 install --upgrade TF_PYTHON_URL   # Python 3.N 
  ```
 ### Windows安装
   Windows使用pip安装或者使用anaconda安装均可，但需要python3.0以上版本
-  ```python
+  ```bash
   C:\> pip3 install --upgrade tensorflow
 To install the GPU version of TensorFlow, enter the following command:
   C:\> pip3 install --upgrade tensorflow-gpu
@@ -35,7 +35,7 @@ To install the GPU version of TensorFlow, enter the following command:
 
     (tensorflow)C:> pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-1.0.1-cp35-cp35m-win_amd64.whl 
 
-    5.安装支持GPU的tensorflow，需要配置cuda和cudnn等gpu运行环境:
+  5.安装支持GPU的tensorflow，需要配置cuda和cudnn等gpu运行环境:
 
     (tensorflow)C:> pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/windows/gpu/tensorflow_gpu-1.0.1-cp35-cp35m-win_amd64.whl 
 
