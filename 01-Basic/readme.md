@@ -4,4 +4,4 @@
 * 如何启动一个会话
 * 打印变量的值
 
-* 简单的线性回归拟合一条直线
+* 简单的线性回归拟合一条直线 [线性回归](https://github.com/Xls1994/Tensorflow-Turitors/blob/master/01-Basic/Linear%20Regression.py)
