@@ -1,3 +1,4 @@
+
 # TensorFlow高效加载数据的方法
 # 概述
  关于Tensorflow读取数据，官网给出了三种方法：
@@ -43,13 +44,14 @@ cwd = os.getcwd()
 2 -- ...
 ...
 '''
+classes=['/data/cat','/data/dog']
 writer = tf.python_io.TFRecordWriter("train.tfrecords")
 for index, name in enumerate(classes):
     class_path = cwd + name + "/"
     for img_name in os.listdir(class_path):
         img_path = class_path + img_name
-            img = Image.open(img_path)
-            img = img.resize((224, 224))
+        img = Image.open(img_path)
+        img = img.resize((224, 224))
         img_raw = img.tobytes()              #将图片转化为原生bytes
         example = tf.train.Example(features=tf.train.Features(feature={
             "label": tf.train.Feature(int64_list=tf.train.Int64List(value=[index])),
@@ -68,8 +70,7 @@ writer.close()
 for serialized_example in tf.python_io.tf_record_iterator("train.tfrecords"):
     example = tf.train.Example()
     example.ParseFromString(serialized_example)
-
-	image = example.features.feature['image'].bytes_list.value
+    image = example.features.feature['img_raw'].bytes_list.value
     label = example.features.feature['label'].int64_list.value
     # 可以做一些预处理之类的
     print image, label
@@ -107,23 +108,27 @@ img, label = read_and_decode("train.tfrecords")
 img_batch, label_batch = tf.train.shuffle_batch([img, label],
                                                 batch_size=30, capacity=2000,
                                                 min_after_dequeue=1000)
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 
 with tf.Session() as sess:
     sess.run(init)
-    threads = tf.train.start_queue_runners(sess=sess)
+    coord = tf.train.Coordinator()
+    threads = tf.train.start_queue_runners(sess=sess,coord=coord)
     for i in range(3):
         val, l= sess.run([img_batch, label_batch])
         #我们也可以根据需要对val， l进行处理
         #l = to_categorical(l, 12)
         print(val.shape, l)
+    coord.request_stop()
+    coord.join(threads)
+    sess,close()
 ```
  至此，tensorflow高效从文件读取数据差不多完结了。
 
 
  恩？等等...什么叫差不多？对了，还有几个**注意事项**：
 
- 第一，tensorflow里的graph能够记住状态（`state`），这使得`TFRecordReader`能够记住`tfrecord`的位置，并且始终能返回下一个。而这就要求我们在使用之前，必须初始化整个graph，这里我们使用了函数`tf.initialize_all_variables()`来进行初始化。
+ 第一，tensorflow里的graph能够记住状态（`state`），这使得`TFRecordReader`能够记住`tfrecord`的位置，并且始终能返回下一个。而这就要求我们在使用之前，必须初始化整个graph，这里我们使用了函数`tf.global_variables_initializer()`来进行初始化。
 
 第二，tensorflow中的队列和普通的队列差不多，不过它里面的`operation`和`tensor`都是符号型的（`symbolic`），在调用`sess.run()`时才执行。
 
