@@ -85,9 +85,11 @@ outputs,states =tf.contrib.rnn.static_rnn(cell,X_t,dtype=tf.float32)
 
 #  输出
 logits = tf.matmul(outputs[-1], W) + b
-
-cost = tf.reduce_mean(
-            tf.nn.softmax_cross_entropy_with_logits(labels=Y,logits=logits))
+with tf.name_scope("loss"):
+    loss = tf.nn.softmax_cross_entropy_with_logits(labels=Y,logits=logits + 1e-10)
+    cost = tf.reduce_mean(loss)
+# cost = tf.reduce_mean(
+#             tf.nn.softmax_cross_entropy_with_logits(labels=Y,logits=logits))
 
 train_op = tf.train.RMSPropOptimizer(learning_rate=0.01).minimize(cost)
 
