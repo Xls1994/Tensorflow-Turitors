@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 import tensorflow as tf
 import numpy as np
 
 # save and restore variable from the files
-def saveFile(path='save_net.ckpt'):
+# 需要保存在一共文件夹里面 否则读取失败
+def saveFile(path='tmp/save_net.ckpt'):
     W =tf.Variable([[1,2,3],[3,4,5]],dtype=tf.float32,name='weights')
     b =tf.Variable([[1,2,3]],dtype=tf.float32,name='biases')
 
@@ -25,5 +27,5 @@ def loadFile(path):
 
 
 if __name__=="__main__":
-    path ='save_net.ckpt'
+    path ='tmp/save_net.ckpt'
     loadFile(path)
