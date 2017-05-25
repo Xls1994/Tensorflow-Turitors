@@ -2,6 +2,11 @@
 You have just find the code for Tensoflow r1.0 with Chinese annotations</br>  
 ## Tensorflow 安装教程  
 该示例代码均基于Tensorflow 1.0版本。由于1.0和以前好多API函数的改变，网上好多教程都是基于0.12版本的，升级1.0以后的需要改动代码才能使用。为此做了这个基于1.0api的示例代码。1.0版本以后是主流，建议大家尝试学习。
+### 更新你的tf文件  
+tf官网给出里一个用于更新代码到1.0版本的python代码[tf_upgrade.py](../master/tf_upgrade.py)
+```sh
+python tf_upgrade.py --infile infile.py --outfile outfile.py
+```
 每个部分详细的介绍请参考各个文件夹里面的readme文件  
 
 更多的TF的例子，可以查看[Tensorflow官网](https://www.tensorflow.org)
