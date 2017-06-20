@@ -69,7 +69,7 @@ for epoch in range(15):
 
     for i in range(total_batch):
         batch_xs, batch_ys = mnist.train.next_batch(batch_size)
-        # 이미지 데이터를 CNN 모델을 위한 자료형태인 [28 28 1] 의 형태로 재구성합니다.
+        # 处理CNN的输入数据
         batch_xs = batch_xs.reshape(-1, 28, 28, 1)
         _, cost_val = sess.run([optimizer, cost], feed_dict={X: batch_xs, Y: batch_ys})
         total_cost += cost_val
@@ -81,7 +81,7 @@ print '训练完毕!'
 
 
 #########
-# 결과 확인
+# 测试模型
 ######
 check_prediction = tf.equal(tf.argmax(model, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(check_prediction, tf.float32))
